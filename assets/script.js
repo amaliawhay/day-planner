@@ -28,27 +28,43 @@ $("#currentDay").html(
           - clicking this button saves <textarea> content to local storage
       */
 
+var timeAmount = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+
 var timeBlocks = [
-  "0900",
-  "1000",
-  "1100",
-  "1200",
-  "1300",
-  "1400",
-  "1500",
-  "1600",
-  "1700",
+  "9",
+  "10",
+  "11",
+  "12",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
 ];
 for (var i = 0; i < timeBlocks.length; i++) {
   var hourEl = $("<p>");
   hourEl.text(timeBlocks[i]);
-  hourEl.attr("data-value", timeBlocks[i]);
+  hourEl.attr(
+    "data-value",
+    timeBlocks[i],
+    "data-time",
+    timeAmount[i]
+  );
   hourEl.addClass("col-1 time-block hour");
   var userInputEl = $("<textarea>");
-  userInputEl.addClass("col-10 form-control");
+  userInputEl.addClass("col-10 description");
   var saveBtn = $("<button>");
   saveBtn.text("Save");
   saveBtn.attr("button");
   saveBtn.addClass("col-1 btn saveBtn");
+
+  if (timeAmount[i] == moment().format("kk")) {
+    userInputEl.addClass("present");
+  } else if (timeAmount[i] < moment().format("kk")) {
+    userInputEl.addClass("past");
+  } else {
+    userInputEl.addClass("future");
+  }
+
   $("#newBlocks").append(hourEl, userInputEl, saveBtn);
 }
