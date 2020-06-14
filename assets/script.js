@@ -41,6 +41,7 @@ var timeBlocks = [
   "4",
   "5",
 ];
+
 for (var i = 0; i < timeBlocks.length; i++) {
   var hourEl = $("<p>");
   hourEl.text(timeBlocks[i]);
@@ -53,6 +54,8 @@ for (var i = 0; i < timeBlocks.length; i++) {
   hourEl.addClass("col-1 time-block hour");
   var userInputEl = $("<textarea>");
   userInputEl.addClass("col-10 description");
+  userInputEl.attr("userEvents");
+
   var saveBtn = $("<button>");
   saveBtn.text("Save");
   saveBtn.attr("button");
@@ -65,6 +68,17 @@ for (var i = 0; i < timeBlocks.length; i++) {
   } else {
     userInputEl.addClass("future");
   }
+
+  $(saveBtn).click(function () {
+    alert("working");
+    // var savedUserEvents = localStorage.getItem(
+    //   "userEvents"
+    // );
+    // localStorage.setItem(
+    //   "userEvents",
+    //   JSON.stringify(savedUserEvents)
+    // );
+  });
 
   $("#newBlocks").append(hourEl, userInputEl, saveBtn);
 }
