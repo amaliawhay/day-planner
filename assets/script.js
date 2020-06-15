@@ -1,7 +1,5 @@
 //This displays the current day in the header of HTML
-$("#currentDay").html(
-  moment().format("dddd, MMMM do YYYY")
-);
+$("#currentDay").html(moment().format("llll"));
 
 //This will save user events when the save button is clicked
 /* - Variable to store user input = empty string or array
@@ -54,11 +52,12 @@ for (var i = 0; i < timeBlocks.length; i++) {
   hourEl.addClass("col-1 time-block hour");
   var userInputEl = $("<textarea>");
   userInputEl.addClass("col-10 description");
-  userInputEl.attr("userEvents");
-
+  userInputEl.attr("data-value", timeBlocks[i]);
+  userInputEl.attr("id", "userEvents-" + timeAmount[i]);
   var saveBtn = $("<button>");
   saveBtn.text("Save");
   saveBtn.attr("button");
+  saveBtn.attr("data-value", timeAmount[i]);
   saveBtn.addClass("col-1 btn saveBtn");
 
   if (timeAmount[i] == moment().format("kk")) {
@@ -69,16 +68,28 @@ for (var i = 0; i < timeBlocks.length; i++) {
     userInputEl.addClass("future");
   }
 
-  $(saveBtn).click(function () {
-    alert("working");
-    // var savedUserEvents = localStorage.getItem(
-    //   "userEvents"
-    // );
-    // localStorage.setItem(
-    //   "userEvents",
-    //   JSON.stringify(savedUserEvents)
-    // );
-  });
+  // var test = "check";
+  // localStorage.setItem("test", test);
+  /*Data values for text areas and buttons. Same attr for each tied to loop
+  get item attr*/
 
   $("#newBlocks").append(hourEl, userInputEl, saveBtn);
 }
+$("button").click(function () {
+  //event.preventDefault();
+  alert("working");
+  var eventSave =
+    "#userEvents-" + $(this).attr("data-value");
+  console.log(eventSave);
+  localStorage.setItem(eventSave, $(eventSave).val());
+});
+
+function init() {
+  for (var j = 0; j < timeAmount.length; j++) {
+    $("#userEvents-" + timeAmount[j]).text(
+      localStorage.getItem("#userEvents-" + timeAmount[j])
+    );
+  }
+}
+
+init();
